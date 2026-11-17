@@ -7,3 +7,21 @@ rust-version.workspace = true
 publish = false
 
 [dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+zip = { version = "9", default-features = false, features = ["deflate", "deflate64", "bzip2", "zstd", "lzma", "xz", "aes-crypto", "time"] }
+sevenz-rust2 = { version = "0.25", default-features = false, features = ["aes256", "bzip2", "ppmd", "deflate", "zstd"] }
+unrar = "0.5"
+tar = "0.4"
+flate2 = "1"
+bzip2 = "0.6"
+liblzma = "0.4"
+zstd = "0.14"
+encoding_rs = "0.8"
+chardetng = "1"
+libc = "0.2"
+
+[dev-dependencies]
+tempfile = "3"
+# Only for building 7z test archives; the app itself only reads them.
+sevenz-rust2 = { version = "0.25", default-features = false, features = ["aes256", "compress", "util"] }

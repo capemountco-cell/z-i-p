@@ -13,12 +13,21 @@
     "windows": [
       {
         "title": "Z-I-P",
-        "width": 1000,
-        "height": 700,
-        "minWidth": 640,
-        "minHeight": 480,
+        "width": 1040,
+        "height": 680,
+        "minWidth": 760,
+        "minHeight": 500,
         "center": true,
-        "resizable": true
+        "resizable": true,
+        "theme": "Dark",
+        "backgroundColor": "#141416",
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true,
+        "trafficLightPosition": {
+          "x": 18,
+          "y": 14
+        },
+        "dragDropEnabled": true
       }
     ],
     "security": {
@@ -27,7 +36,10 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["app", "dmg"],
+    "targets": [
+      "app",
+      "dmg"
+    ],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -37,17 +49,134 @@
     ],
     "category": "Utility",
     "copyright": "",
-    "shortDescription": "A native macOS app.",
+    "shortDescription": "Unpacks any archive: ZIP, RAR, 7z, TAR and more.",
     "macOS": {
       "minimumSystemVersion": "12.0",
       "entitlements": "entitlements.plist",
       "hardenedRuntime": true,
       "signingIdentity": "-",
       "dmg": {
-        "windowSize": { "width": 660, "height": 400 },
-        "appPosition": { "x": 180, "y": 190 },
-        "applicationFolderPosition": { "x": 480, "y": 190 }
+        "windowSize": {
+          "width": 660,
+          "height": 400
+        },
+        "appPosition": {
+          "x": 180,
+          "y": 190
+        },
+        "applicationFolderPosition": {
+          "x": 480,
+          "y": 190
+        }
       }
-    }
+    },
+    "fileAssociations": [
+      {
+        "ext": [
+          "zip",
+          "zipx",
+          "cbz"
+        ],
+        "name": "ZIP archive",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "public.zip-archive",
+          "com.pkware.zip-archive"
+        ]
+      },
+      {
+        "ext": [
+          "rar",
+          "cbr"
+        ],
+        "name": "RAR archive",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "com.rarlab.rar-archive"
+        ]
+      },
+      {
+        "ext": [
+          "7z",
+          "cb7"
+        ],
+        "name": "7-Zip archive",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "org.7-zip.7-zip-archive"
+        ]
+      },
+      {
+        "ext": [
+          "tar"
+        ],
+        "name": "Tar archive",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "public.tar-archive"
+        ]
+      },
+      {
+        "ext": [
+          "gz",
+          "tgz"
+        ],
+        "name": "Gzip archive",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "org.gnu.gnu-zip-archive",
+          "org.gnu.gnu-zip-tar-archive"
+        ]
+      },
+      {
+        "ext": [
+          "bz2",
+          "tbz",
+          "tbz2"
+        ],
+        "name": "Bzip2 archive",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "public.bzip2-archive"
+        ]
+      },
+      {
+        "ext": [
+          "xz",
+          "txz"
+        ],
+        "name": "XZ archive",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": [
+          "org.tukaani.xz-archive"
+        ]
+      },
+      {
+        "ext": [
+          "zst",
+          "tzst"
+        ],
+        "name": "Zstandard archive",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": []
+      },
+      {
+        "ext": [
+          "001"
+        ],
+        "name": "Split archive piece",
+        "role": "Viewer",
+        "rank": "Default",
+        "contentTypes": []
+      }
+    ]
   }
 }
