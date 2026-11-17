@@ -18,6 +18,7 @@ z-i-p-core = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
 
 [features]
 # Turned on by `tauri build`. Serves the bundled frontend instead of devUrl.

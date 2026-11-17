@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Merged into the app's Info.plist. macOS shows these when it asks
+         whether Z-I-P may open archives in, and unpack into, these places. -->
+    <key>NSDownloadsFolderUsageDescription</key>
+    <string>Z-I-P unpacks archives you open from Downloads, next to the archive.</string>
+    <key>NSDesktopFolderUsageDescription</key>
+    <string>Z-I-P unpacks archives you open from the Desktop, next to the archive.</string>
+    <key>NSDocumentsFolderUsageDescription</key>
+    <string>Z-I-P unpacks archives you open from Documents, next to the archive.</string>
+    <key>NSRemovableVolumesUsageDescription</key>
+    <string>Z-I-P unpacks archives you open from external drives.</string>
+    <key>NSNetworkVolumesUsageDescription</key>
+    <string>Z-I-P unpacks archives you open from network drives.</string>
+</dict>
+</plist>

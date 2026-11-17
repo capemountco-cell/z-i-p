@@ -1,57 +1,56 @@
-# Mac App Template
+# Z-I-P
 
-A starting point for native macOS apps that build a working `.dmg` from day
-one. Tauri 2, Rust and React, with every known way the `.dmg` step fails
-handled by the scripts rather than by you.
+Unpacks any archive on your Mac: ZIP, RAR, 7z, TAR, GZ, BZ2, XZ and ZST,
+including split archives (`.part1.rar`, `.7z.001`) and password-protected
+ones. Dark, quiet, and careful with your files.
 
-## Start a new app
+Drop archives on the window (or open them from Finder) and they unpack next
+to themselves. Or look inside first and take out only the files you want.
 
-Create an empty GitHub repository for the app, open a Claude chat with it
-selected, and paste the prompt in [docs/new-app.md](docs/new-app.md). The
-chat copies this template in, names it, and checks that the `.dmg` builds.
+**Careful with your files**
 
-### Or do it yourself
+- Your archive is never changed or deleted.
+- Nothing is overwritten: if `Photos` exists you get `Photos 2`.
+- Files appear only once every one is out. A failed or stopped unpack
+  leaves nothing behind.
+- Free space is checked before the first byte is written.
+- Names that point outside the destination (`../../`) are refused.
+- An archive holding one folder unpacks to that folder, not `Photos/Photos`.
+- `__MACOSX`, `.DS_Store` and `._` files are left out.
+- Japanese, Chinese and other non-Latin names from old Windows zips are
+  decoded correctly.
+- Files from a downloaded archive keep macOS's "downloaded" mark, so
+  Gatekeeper checks apps inside it.
+- Passwords are kept in memory for the session only and tried across the
+  rest of a batch, so you type one once. No network connections.
 
-1. On GitHub, click **Use this template** > **Create a new repository**.
-2. Clone it, then name it:
+See [docs/product.md](docs/product.md) for what users of other unarchivers
+asked for, and the order of work.
 
-   ```sh
-   npm install
-   npm run init -- --name "My App" --id com.yourname.myapp
-   ```
+Built with Tauri 2, Rust and React, from the Mac App Template. The look
+follows Camu's.
 
-3. Check this Mac has what it needs, and fix anything it lists:
+## Where things live
 
-   ```sh
-   npm run doctor
-   ```
-
-4. Run it:
-
-   ```sh
-   npm run dev
-   ```
-
-5. Package it:
-
-   ```sh
-   npm run dmg
-   ```
-
-   The image lands at `release/My App-0.1.0-arm64.dmg`, already checked:
-   it mounts, holds the app and an Applications link, and the signature is
-   valid.
+| Path | What |
+|---|---|
+| `crates/z-i-p-core/src/format.rs` | Recognising an archive from its first bytes; split pieces |
+| `crates/z-i-p-core/src/list.rs` | Listing contents without unpacking |
+| `crates/z-i-p-core/src/extract.rs` | Unpacking safely (staging, no overwrite, space check) |
+| `crates/z-i-p-core/src/names.rs` | Safe paths, name encodings, clutter, unique names |
+| `crates/z-i-p-core/tests/` | Real archives built and unpacked, plus RAR fixtures |
+| `src-tauri/src/lib.rs` | Thin IPC commands, progress events, Finder "Open With" |
+| `src/` | The UI. Every call to Rust goes through `src/lib/native.ts` |
 
 ## Everyday commands
 
 | Command | Does |
 | --- | --- |
 | `npm run dev` | Runs the app with live reload |
+| `npm run dev:web` | The interface in a browser; add `?demo` for sample data |
 | `npm run check` | Type check, tests, Rust format, lint and tests. Run before every push |
 | `npm run dmg` | Builds and verifies a `.dmg` for this Mac's chip |
 | `npm run dmg:universal` | One `.dmg` for Apple silicon and Intel |
-| `npm run dmg -- --plain` | Same, without the Finder window styling (over SSH, or if that step hangs) |
-| `npm run verify-dmg -- path.dmg` | Checks any `.dmg` |
 | `npm run icons` | Regenerates every icon size from `src-tauri/app-icon.png` (1024×1024) |
 | `npm run set-version -- 1.2.0` | Sets the version everywhere it lives |
 | `npm run doctor` | Lists anything missing on this machine, with the fix |
@@ -65,31 +64,10 @@ git tag v1.0.0
 git push && git push --tags
 ```
 
-GitHub Actions builds a universal `.dmg` and attaches it to a GitHub release.
-It is signed and notarized if you have added Apple credentials as secrets
-([docs/signing.md](docs/signing.md)), and ad-hoc signed otherwise.
+GitHub Actions builds a universal `.dmg` and attaches it to a GitHub release
+([docs/signing.md](docs/signing.md) for signing and notarizing).
 
-Every push also runs CI, which builds a `.dmg` on a real Mac and attaches it
-to the run, so a change that breaks packaging is caught on the day it is made.
+## Licences
 
-## Layout
-
-```
-crates/starter-core/   The app's logic. No Tauri, so it tests on any OS.
-src-tauri/             The native shell: window, commands, bundling config.
-  tauri.conf.json      Name, id, window, .dmg layout, signing.
-  entitlements.plist   What the hardened runtime allows.
-  app-icon.png         The one icon you edit; npm run icons makes the rest.
-src/                   The React interface.
-  lib/native.ts        Every call from the UI to Rust, in one place.
-scripts/               doctor, init, build-dmg, verify-dmg, set-version.
-docs/                  dmg.md (failures and fixes), signing.md.
-```
-
-`init` renames `starter` and `starter-core` to your app's name.
-
-## Requirements
-
-macOS 12 or newer to build, with the Xcode command line tools, Node 20+ and
-Rust. `npm run doctor` checks all of it. The core crate and the frontend also
-build and test on Linux, and that is what CI does first.
+RAR support uses the unRAR source code by Alexander Roshal (via the `unrar`
+crate), whose licence allows extracting RAR archives but not creating them.

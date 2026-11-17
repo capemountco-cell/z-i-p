@@ -1,5 +1,11 @@
 # Working on this app
 
+Z-I-P unpacks archives. What it must do better than other unarchivers, and
+the order of work, is in docs/product.md.
+
+This repository may be synced to Lovable: never rewrite pushed history (no
+force-push, rebase, amend or squash of pushed commits).
+
 This repository started from the Mac App Template. These rules keep it able
 to produce a working `.dmg` at all times.
 
